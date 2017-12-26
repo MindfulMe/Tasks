@@ -1,0 +1,82 @@
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Task_16
+{
+    public struct Point
+    {
+        public int x;
+        public int y;
+        public static string CheckTriangle(Point A, Point B, Point C)
+        {
+            int[] vectorBA = new int[2] { A.x - B.x, A.y - B.y };
+            int[] vectorBC = new int[2] { B.x - C.x, B.y - C.y };
+            string result = "";
+            if (vectorBA[0] / vectorBC[0] != vectorBA[1] / vectorBC[1])
+            {
+                double BA = Math.Sqrt(vectorBA[0] * vectorBA[0] + vectorBA[1] * vectorBA[1]);
+                double BC = Math.Sqrt(vectorBC[0] * vectorBC[0] + vectorBC[1] * vectorBC[1]);
+                double AC = Math.Sqrt((C.x - A.x) * (C.x - A.x) + (C.y - A.y) * (C.y - A.y));
+                double cosABC = (BC * BC + BA * BA - AC * AC) / (2 * BA * BC);          
+                double uABC = Math.Acos(cosABC);
+                double uBCA = Math.Asin(BA * Math.Sin(uABC) / AC); 
+                double uBAC = Math.Asin(BC * Math.Sin(uBCA) / BA);
+                if (BA == BC || BC == AC || AC == BA)
+                {
+                    result = "Isosceles";
+                    if (uABC == Math.PI / 3)
+                    {
+                        result = "Equilateral";
+                    }
+                }
+                if (uABC > Math.PI / 2 || uBCA > Math.PI / 2 || uBAC > Math.PI / 2)
+                {
+                    result += "Obtuse";
+                }
+                else if (uABC == Math.PI / 2 || uABC == Math.PI / 2 || uABC == Math.PI / 2)
+                {
+                    result += " Rectangular";
+                }
+                else
+                {
+                    result += " Acuteness";
+                }
+
+            }
+            else
+            {
+                result = "Points are located one a single line";
+            }
+            return result;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Point point_1;
+            Point point_2;
+            Point point_3;
+            Console.WriteLine("The first point:");
+            string[] tempStr = Console.ReadLine().Split(' ');
+            point_1.x = Convert.ToInt32(tempStr[0]);
+            point_1.y = Convert.ToInt32(tempStr[1]);
+            Console.WriteLine("The second point:");
+            tempStr = Console.ReadLine().Split(' ');
+            point_2.x = Convert.ToInt32(tempStr[0]);
+            point_2.y = Convert.ToInt32(tempStr[1]);
+            Console.WriteLine("The third point:");
+            tempStr = Console.ReadLine().Split(' ');
+            point_3.x = Convert.ToInt32(tempStr[0]);
+            point_3.y = Convert.ToInt32(tempStr[1]);
+            Console.WriteLine(Point.CheckTriangle(point_1, point_2, point_3));
+            Console.ReadKey();
+
+
+        }
+    }
+}
