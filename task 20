@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Practice_20
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int s, n = 0;
+            Console.WriteLine("Enter the number of elements");
+            n = Int32.Parse(Console.ReadLine());
+            int[] A = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                Console.WriteLine("The element");
+                A[i] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            Console.WriteLine("Введіть число ");
+            s = Int32.Parse(Console.ReadLine());
+            bool Check()
+            {
+                bool result = false;
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = i; j < n; j++)
+                    {
+                        if (A[i] + A[j] == s)
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+                return result;
+            }
+            Console.WriteLine(Check());
+            Console.ReadKey();
+        }
+    }
+}
