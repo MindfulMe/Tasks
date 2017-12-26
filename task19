@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _19
+{
+
+    class Program
+    {
+        static int LogBase2(int value)
+        {
+            int log = 31;
+            while (log >= 0)
+            {
+                int mask = (1 << log);
+                if ((mask & value) != 0)
+                    return (int)log;
+                log--;
+            }
+            return -1;
+        }
+        static void Main(string[] args)
+        {
+            int n, a;
+            Console.WriteLine("Power of ");
+
+            n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Argument ");
+            a = Convert.ToInt32(Console.ReadLine());
+            int result = a;
+            if (a != 2 || a != 3)
+            {
+
+                for (int i = 1; i < n; i++)
+                {
+                    if (i < 4* LogBase2(n))
+                    {
+                        result *= a;
+                    }
+                }
+                Console.Write(result);
+                Console.ReadKey();
+            }
+        }
+    }
+}
