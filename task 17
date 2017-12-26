@@ -1,0 +1,212 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Practice_17
+{
+    public struct Point
+
+    {
+
+        public double x;
+
+        public double y;
+
+        public static double MaxX(Point point_1, Point point_2) // Находит максимальную координату x cреди двух точек
+
+        {
+
+            if (point_1.x > point_2.x)
+
+            {
+
+                return point_1.x;
+
+            }
+
+            else
+
+            {
+
+                return point_2.x;
+
+            }
+
+        }
+
+        public static double MinX(Point point_1, Point point_2) // Находит минимальную координату x cреди двух точек
+
+        {
+
+            if (point_1.x < point_2.x)
+
+            {
+
+                return point_1.x;
+
+            }
+
+            else
+
+            {
+
+                return point_2.x;
+
+            }
+
+        }
+
+    }
+
+    class Polygon
+
+    {
+
+        static double[] IntersectionLine(Point point_1, Point point_2, Point point_3, Point point_4)
+
+        {
+
+            double[] x = new double[2] { 0, 0 };
+
+            double k1 = (point_2.y - point_1.y) / (point_2.x - point_1.x);
+
+            double k2 = (point_4.y - point_3.y) / (point_4.x - point_3.x);
+
+            if (k1 != k2) // Проверка на параллельность
+
+            {
+
+                x[0] = (point_3.y - point_1.y + point_1.x * k1 - point_3.x * k2) / (k1 - k2); // Формула находит координату х точки пересечения прямых
+
+                double minimumMax = Math.Min(Point.MaxX(point_1, point_2), (Point.MaxX(point_3, point_4))); // Максимальное значение интервала куда попадет точка 
+
+                double maximumMin = Math.Max(Point.MinX(point_1, point_2), (Point.MinX(point_3, point_4))); // Минимальное значение интервала куда попадет точка 
+
+                if (maximumMin < minimumMax && (x[0] >= maximumMin && x[0] <= minimumMax)) // Проверка входит ли точка пересечения в допустимый интервал
+
+                {
+
+                    x[1] = 1;
+
+                }
+
+            }
+
+
+
+            return x;
+
+
+
+        }
+
+        public static string CheckPol(Point[] pointMass)
+
+        {
+
+            double[] result = new double[2];
+
+            for (int i = 2; i < pointMass.Length; i++) // Выбирает точки первой прямой, которая проверяеться на пересечение
+
+            {
+
+                for (int n = 1; n < i; n++) // Выбирает все прямые с которыми может быть пересечение 
+
+                {
+
+                    if (i == pointMass.Length - 1) // Для последней (замыкающей) итерации
+
+                    {
+
+                        result = IntersectionLine(pointMass[n - 1], pointMass[n], pointMass[i], pointMass[0]);
+
+                    }
+
+                    else
+
+                    {
+
+                        result = IntersectionLine(pointMass[n - 1], pointMass[n], pointMass[i], pointMass[i + 1]);
+
+                    }
+
+                }
+
+                if (result[1] == 1)
+
+                    break;
+
+            }
+
+            if (result[1] == 0)
+
+            {
+
+                return "Так";
+
+            }
+
+            else
+
+            {
+
+                return "Нi";
+
+            }
+
+
+
+        }
+
+
+
+    }
+
+    class Program
+
+    {
+
+        static void Main(string[] args)
+
+        {
+
+            Point[] massPoint = new Point[100];
+
+            string[] tempMass = new string[2];
+
+            int i = 0;
+
+            for (; i < massPoint.Length; i++)
+
+            {
+
+                Console.WriteLine("Введите точку");
+
+                string userString = Console.ReadLine();
+
+                if (userString == "00")
+
+                    break;
+
+                tempMass = userString.Split(' ');
+
+                massPoint[i].x = Convert.ToDouble(tempMass[0]);
+
+                massPoint[i].y = Convert.ToDouble(tempMass[1]);
+
+            }
+
+            Array.Resize(ref massPoint, i + 1);
+
+            string result = Polygon.CheckPol(massPoint);
+
+            Console.WriteLine(result);
+
+            Console.ReadKey();
+
+        }
+
+    }
+}
