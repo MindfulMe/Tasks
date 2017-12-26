@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Task_22
+{
+    class Binary
+    {
+        private static uint[] Overflow(uint[] mass)
+        {
+            uint[] result = new uint[mass.Length + 1];
+            result[0] = 1;
+            for (int i = 1; i <= mass.Length; i++)
+            {
+                result[i] = mass[i - 1];
+            }
+            return result;
+        }
+        public static uint[] Add(uint[] element_1, uint[] element_2)
+        {
+            uint[] sum = new uint[element_2.Length];
+            uint k = 0; 
+            for (int i = element_1.Length - 1; i >= 0; i--)
+            {
+                sum[i] = element_1[i] + element_2[i] + k;
+                if (sum[i] == 2)
+                {
+                    sum[i] = 0;
+                    k = 1;
+                }
+                else if (sum[i] == 3)
+                {
+                    sum[i] = 1;
+                    k = 1;
+                }
+                else
+                {
+                    k = 0;
+                }
+            }
+            if (k == 1)
+            {
+                Overflow(sum);
+            }
+            return sum;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введите первое число");
+            string tempString_1 = Console.ReadLine();
+            Console.WriteLine("Введите второе число");
+            string tempString_2 = Console.ReadLine();
+            int max = Math.Max(tempString_1.Length, tempString_2.Length);
+            if (tempString_1.Length < max)
+            {
+                while (tempString_1.Length != max)
+                {
+
+                    tempString_1 = String.Concat("0", tempString_1);
+
+                }
+            }
+
+            else if (tempString_2.Length < max)
+            {
+                while (tempString_2.Length != max)
+                {
+                    tempString_2 = String.Concat("0", tempString_2);
+                }
+            }
+            char[] tempMass_1 = tempString_1.ToCharArray();
+            char[] tempMass_2 = tempString_2.ToCharArray();
+            uint[] element_2 = new uint[max];
+            uint[] element_1 = new uint[max];
+            for (int i = max - 1; i >= 0; i--)
+            {
+                element_1[i] = Convert.ToUInt32(Convert.ToString(tempMass_1[i]));
+                element_2[i] = Convert.ToUInt32(Convert.ToString(tempMass_2[i]));
+
+                if ((element_1[i] == 1 || element_1[i] == 0) && (element_2[i] == 0 || element_2[i] == 1))
+                {
+                    continue;
+                }
+                Console.WriteLine("Exception!!");
+                break;
+
+            }
+            foreach (int item in Binary.Add(element_1, element_2))
+            {
+                Console.Write(item);
+            }
+            Console.ReadKey();
+
+        }
+    }
+}
