@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace Practice_18
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введiть арифметичний вираз , числа вiд операцi'ї вiддiленi однiєю або бiльше прогалин");
+
+            string[] expressions = { Console.ReadLine() };
+
+            string pattern = @"(\d+)\s+([-+*/])\s+(\d+)";
+            foreach(var expresion in expressions)
+                foreach(Match m in Regex.Matches(expresion, pattern))
+                {
+                    ushort value1 = Convert.ToUInt16(m.Groups[1].Value);
+                    ushort value2 = Convert.ToUInt16(m.Groups[3].Value);
+                    switch (m.Groups[2].Value)
+                    {
+                        case "+":
+                            Console.Write("Значення виразу = {0}",value1+value2);
+                            break;
+                        case "-":Console.WriteLine("Значення виразу = {0}", value1 - value2);
+                            break;
+                        case "*":
+                            Console.WriteLine("Значення виразу = {0}", value1 * value2 );
+                            break;
+                        case "/":
+                            try
+                            {
+                                Console.WriteLine("Значення виразу = {0}", value1 / value2);
+                            }
+                            catch(DivideByZeroException e)
+                            {
+                                Console.WriteLine("Неможливо роздiлити на 0");
+                            }
+
+                            break;
+
+                    }
+                }
+            Console.ReadKey();
+
+        }
+    }
+}
