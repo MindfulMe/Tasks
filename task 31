@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Task_31
+{
+    class Number
+    {
+        public static void Decomposition(int number)
+        {
+            if (number == 1)
+            {
+                Console.WriteLine("1");
+            }
+            else
+            {
+                for (int i = 1; i <= number / 2; i++)
+                {
+                    SupForDecomposition(i, number - i, Convert.ToString(i), number);
+                }
+            }
+        }
+        static void SupForDecomposition(int i, int number, string str, int trueNumber)
+        {
+            int k = i;
+            for (; k <= number; k++)
+            {
+                SupForDecomposition(k, number - k, str + " + " + k, trueNumber);
+            }
+            if (k == i)
+            {
+                string[] massOfTerm = str.Split(' ');
+                int sum = 0;
+                foreach (string num in massOfTerm)
+                {
+                    if (num != "+")
+                    {
+                        sum += Convert.ToInt32(num);
+                    }
+                }
+                if (sum == trueNumber)
+                {
+                    Console.WriteLine(str);
+                }
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter a number");
+            Number.Decomposition(Convert.ToInt32(Console.ReadLine()));
+            Console.ReadKey();
+        }
+    }
+}
