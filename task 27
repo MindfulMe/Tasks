@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Task_27
+{
+    class Number
+    {
+        static List<uint> FindPrime(uint n)
+        {
+            List<uint> primeList = new List<uint>() { 2, 3, 5 };
+            for (uint i = 5; i < n / 2; i = i + 2)
+            {
+                for (int j = 3; j < i / 2; j = j + 2)
+                {
+                    if (i % j == 0) 
+                    {
+                        primeList.Add(i);
+                    }
+                }
+            }
+            return primeList;
+        }
+        public static void Decomposition(uint n, string result)
+        {
+            List<uint> primeNumber = FindPrime(n);
+            bool counter = true; 
+            foreach (uint prime in primeNumber)
+            {
+                if (n % prime == 0 && n != prime)
+                {
+                    counter = false;
+                    uint newN = n / prime;
+                    Decomposition(newN, result + " * " + prime);
+                    break;
+                }
+            }
+            if (counter)
+            {
+                Console.WriteLine(result + " * " + n);
+            }
+
+
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter a number");
+            uint n = Convert.ToUInt32(Console.ReadLine());
+            Number.Decomposition(n, "1" );
+            Console.ReadLine();
+        }
+    }
+}
