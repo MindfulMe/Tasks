@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Task_34
+{
+    class Row
+    {
+        static List<char> CopyList(List<char> OldList)
+        {
+            List<char> newList = new List<char>();
+            foreach (var item in OldList)
+            {
+                newList.Add(item);
+            }
+            return newList;
+        }
+        public static void Recurs(List<char> ListOfWords, string result)
+        {
+            List<char> NewListOfWords = new List<char>();
+            foreach (char word in ListOfWords)
+            {
+                NewListOfWords = CopyList(ListOfWords);
+                if (ListOfWords.Count == 1)
+                {
+                    result = result + word;
+                    Console.WriteLine(result);
+                    break;
+                }
+                NewListOfWords.Remove(word);
+                Recurs(NewListOfWords, result + word);
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter a line");
+            List<char> massOfLiteral = Console.ReadLine().ToList();
+            string result = "";
+            Row.Recurs(massOfLiteral, result);
+            Console.ReadKey();
+        }
+    }
+}
