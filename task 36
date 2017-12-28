@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Practice_36
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Введiть розмiрнiсть масиву");
+            int n = Int32.Parse(Console.ReadLine());
+            int[] num = new int[n];
+            Console.WriteLine("Введiть масив:");
+            string[] input = Console.ReadLine().Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < (n < input.Length ? n : input.Length); ++i)
+                num[i] = Int32.Parse(input[i]);
+            Console.WriteLine("");
+
+            int outer, inner;
+            for (outer = n - 1; outer > 0; outer--)
+            {
+                for (inner = 0; inner < outer; inner++)
+                {
+                    if (num[inner] > num[inner + 1])
+                    {
+                        int temp = num[inner];
+                        num[inner] = num[inner + 1];
+                        num[inner + 1] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Вiдсортований список:");
+            for (int i = 0; i < n; i++)
+                Console.Write(num[i] + " ");
+
+            Console.ReadKey();
+        }
+    }
+}
