@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Project_35
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter a number of elements");
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] a = new int[n];
+            for (int i = 0;i < n;i++)
+                a[i] = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("f");
+            int res = Convert.ToInt32(Console.ReadLine());
+
+            int try1 = 0;
+            bool[] ring = new bool[n];
+            for(int i = 0;i< Math.Pow(2, n);i++)
+            {
+                try1 = 0;
+                for (int q=0; q < n;q++)
+                {
+                    if (ring[q] == true) try1 += a[q];
+                    else try1 -= a[q];
+                }
+
+            }
+
+        }
+        static bool[] Add(bool[] ar)
+        {
+            int i = 0;
+            while (true)
+            {
+                if (ar[i] == false) { ar[i] = true; break; }
+                else { ar[i] = false; i++; }
+            }
+
+            return ar;
+        }
+
+    }
+}
