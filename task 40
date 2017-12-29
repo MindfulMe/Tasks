@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _40
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool counter = false;
+            bool counter1 = false;
+            Console.WriteLine("Enter a line");
+            string line = Console.ReadLine();
+            char[] letters = line.ToCharArray();
+            for (int i = 0; i < line.Length; i++)
+            {
+                if (Convert.ToString(letters[i]) == "[" || Convert.ToString(letters[i]) =="]")
+                {   
+                    counter = !counter;
+
+                }  
+                if (Convert.ToString(letters[i]) == ")" || Convert.ToString(letters[i]) == "(")
+                {
+                    counter1 = !counter1;
+                } 
+            }
+            if (counter1==true || counter==true)
+            {
+                Console.WriteLine("Nope");
+            }
+            else
+            {
+                Console.WriteLine("True");
+            }
+            Console.ReadKey();
+        }
+    }
+}
