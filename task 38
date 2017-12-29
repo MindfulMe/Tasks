@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Project_38
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            uint Square = Convert.ToUInt32(Console.ReadLine());
+            uint Q=0;
+            for (uint i =1;i<= Square;i++)
+                if (Square % i == 0)
+                    Q++;
+            Console.WriteLine(Q);
+            Console.ReadKey();
+        }
+    }
+}
