@@ -1,0 +1,103 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Project_39
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            string input = Console.ReadLine();
+            int N = input.Length;
+
+            int[,] arr = new int[N, N];
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    arr[i, j] = Convert.ToInt32(Convert.ToString(input[j]));
+                }
+                if (i < N - 1)
+                    input = Console.ReadLine();
+            }
+
+            bool[] vect = new bool[(N - 1) * 2];
+            bool[] MaxVect = new bool[(N - 1) * 2];
+            for (int i = 0; i < N - 1; i++) vect[i] = true;
+            Array.Copy(vect, MaxVect, vect.Length);
+
+            int CombCount = C_Num(N - 1)-1;
+            int Length = FindLong(arr, vect, N);
+
+
+            for (int temp = 0; temp < CombCount; temp++)
+            {
+                vect = Next(vect);
+                if (Length > FindLong(arr, vect, N))
+                {
+                    Length = FindLong(arr, vect, N);
+                    Array.Copy(vect, MaxVect, vect.Length);
+                }
+            }
+
+            for(int i =0, x =0, y = N * 2; i< MaxVect.Length;i++)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.Write('.');
+                if (MaxVect[i] == true) x++;
+                else y--;
+            }
+            Console.SetCursorPosition(N-1, N+1);
+            Console.Write('.');
+
+
+            Console.ReadKey();
+        }
+
+        static int FindLong(int[,] arr, bool[] num, int N)
+        {
+            int res = 0;
+            for (int i =0, x =0, y = N-1; i< num.Length;i++)
+            {
+                res += arr[y, x];
+                if (num[i] == true)
+                    x++;
+                else y--;
+            }
+            return res;
+        }
+
+        static bool[] Next(bool[] arr)
+        {
+            int i;
+            for (i = 0; arr[arr.Length - i - 1] == true; i++) arr[arr.Length - i - 1] = false;
+            int q;
+            for (q = arr.Length - 1; arr[q] == false; q--) ;
+            arr[q] = false;
+            q++;
+            for (int a = q; a < q + i + 1; a++)
+            {
+                arr[a] = true;
+            }
+
+            return arr;
+        }
+
+        static int C_Num(int k)
+        {
+            int res1 = 1;
+            for (int i = 1; i <= k; i++)
+                res1 *= k + i;
+            int res2 = 1;
+            res2 = 1;
+            for (int i = 1; i <= k; i++)
+                res2 *= i;
+
+            return res1 / res2;
+        }
+    }
+}
