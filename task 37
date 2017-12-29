@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Project_37
+{
+    public struct Point
+    {
+        public Point(string[] s)
+        {
+            x = Convert.ToInt32(s[0]);
+            y = Convert.ToInt32(s[1]);
+        }
+        public int x;
+        public int y;
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Point> ver = new List<Point>();
+            while (true)
+            {
+                string s = Console.ReadLine();
+                if (s != "") ver.Add(new Point(s.Split(' ')));
+                else break;
+            }
+            double square = 0;
+            for (int i = 1; i < ver.Count - 1; i++)
+            {
+                square += TriangleSquare(ver[0], ver[i], ver[i + 1]);
+            }
+
+            Console.WriteLine(square);
+            Console.ReadKey();
+        }
+        static double TriangleSquare(Point a1, Point a2, Point a3)
+        {
+            return Math.Abs(Convert.ToDouble(((a2.x - a1.x) * (a3.y - a1.y) - (a2.y - a1.y) * (a3.x - a1.x))) / 2);
+        }
+    }
+}
